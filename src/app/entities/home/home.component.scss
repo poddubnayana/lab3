@@ -1,0 +1,81 @@
+:host {
+
+    .example-flex-container {
+        display: flex;
+        max-width: 1920px;
+        margin-bottom: 40px;
+        padding: 0 75px;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .left-container {
+        width: 25%;
+    }
+
+    .border-forms {
+        display: flex;
+        padding: 20px;
+        margin-bottom: 30px;
+        flex-direction: column;
+        border: 2px solid #005b8f;
+    }
+
+    .mat-form-width, .example-form-left {
+        width: 100%;
+        margin-bottom: 0px;
+    }
+
+    .example-button-row {
+        align-self: flex-end;
+    }
+
+    .mdc-text-field--outlined {
+        width: min-content;
+        font-family: var(--mdc-outlined-text-field-label-text-font);
+        font-size: var(--mdc-outlined-text-field-label-text-size);
+        font-weight: var(--mdc-outlined-text-field-label-text-weight);
+        letter-spacing: var(--mdc-outlined-text-field-label-text-tracking);
+        color: var(--mdc-outlined-text-field-label-text-color);
+        white-space: nowrap;
+
+    }
+
+    .right-container {
+        width: 72%;
+    }
+
+    .row {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+
+    .example-form-rignt {
+        width: 100px;
+    }
+
+    .mat-form-width1 {
+        display: block;
+        box-sizing: border-box;
+        width: 100px;
+    }
+
+    .text {
+        padding-top: 15px;
+    }
+
+    .mat-accordion {
+        display: inline-block;
+        height: 340px; 
+        width: 940px;
+        overflow-y: auto;
+    }
+
+    .panel-row {
+        display: flex;
+        justify-content: space-between;
+    }
+
+
+    }
