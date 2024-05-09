@@ -19,9 +19,15 @@ export class HomeFormBuilderService {
           name: new FormControl('', [Validators.required]),
           level: new FormControl('', [Validators.required]),
           power: new FormControl('', [Validators.required]),
-          abilities: new FormControl('', [Validators.required]),
+          abilities: new FormControl([], [Validators.required]),
         });
     }
+
+    public addAbilities(): FormGroup {
+      return this._fb.group({
+        abilities: new FormControl('', [Validators.pattern(/[a-zA-Zа-яёА-ЯЁ]/), Validators.required]),
+      })
+    };
 
     
 }

@@ -27,12 +27,10 @@
                 <form class="example-form-left">
                     <mat-form-field class="mat-form-width" appearance="outline">
                         <mat-label>Способность</mat-label>
-                        <mat-select formControlName="abilities">
-                            <mat-option *ngFor="let val of select_ability" [value]="val">
-                            {{val}}
-                            </mat-option>
+                        <mat-select multiple formControlName="abilities">
+                          <mat-option *ngFor="let val of select_ability" [value]="val">{{val}}</mat-option>
                         </mat-select>
-                    </mat-form-field>
+                      </mat-form-field>
                 </form>
 
                 <form class="example-form-left">
@@ -53,7 +51,7 @@
         </div>
 
         <div class="border-forms">
-            <form [formGroup]="heroForm" class="example-form-left">
+            <form [formGroup]="addAbilities" class="example-form-left">
                 <mat-form-field class="mat-form-width" appearance="outline">
                 <mat-label>Добавление способностей</mat-label>
                 <input matInput
@@ -65,7 +63,7 @@
             </form>
 
             <div class="example-button-row">
-                <button (click)="addAbility()" mat-raised-button color="primary">Добавить способность</button>
+                <button (click)="addAbilityTo()" [disabled]="addAbilities.valid" mat-raised-button color="primary">Добавить способность</button>
             </div>
         </div>
     </div>
@@ -81,11 +79,11 @@
                     </p>
                     <form class="example-form-right">
                         <mat-form-field class="mat-form-width1" appearance="outline">
-                        <input #target matInput
+                        <input matInput
                             type="number"
-                            [min]="0"
+                            [min]="1"
                             [max]="10"
-                            (keyup)="filterData(+minLevel.value)"
+                            (change)="filterData(+minLevel.value, +maxLevel.value, name.value, abilities.value)"
                             #minLevel>
                         </mat-form-field>
                     </form>
@@ -94,28 +92,25 @@
                     </p>
                     <form class="example-form">
                         <mat-form-field class="mat-form-width1" appearance="outline">
-                        <input #target matInput
+                        <input matInput
                             type="number"
-                            [min]="0"
+                            [min]=(+minLevel.value)
                             [max]="10"
-
-                            #maxLevel>
+                            (change)="filterData(+minLevel.value, +maxLevel.value, name.value, abilities.value)"
+                            #maxLevel
+                            autocomplete="off">
                         </mat-form-field>
                     </form>
                     <p class="mdc-text-field--outlined">
                         Способности:
                     </p>
                     <mat-form-field class="mat-form-width" appearance="outline">
-                        <mat-select multiple>
-                          <!--mat-select-trigger>
-                            {{select_ability.value?.[0] || ''}}
-                            <span *ngIf="(select_ability.value?.length || 0) > 1" class="example-additional-selection">
-                              (+{{(select_ability.value?.length || 0) - 1}} {{select_ability.value?.length === 2 ? 'other' : 'others'}})
-                            </span>
-                          </mat-select-trigger-->
-                          <mat-option *ngFor="let val of select_ability" [value]="val">{{val}}</mat-option>
+                        <mat-select multiple #abilities (valueChange)="filterData(+minLevel.value, +maxLevel.value, name.value, abilities.value)">
+                            <mat-option *ngFor="let abilities of select_ability" [value]="abilities" >
+                                {{abilities}}  
+                            </mat-option>
                         </mat-select>
-                      </mat-form-field>
+                    </mat-form-field>
                 </div>
                 <div class="row">
                     <p class="mdc-text-field--outlined">
@@ -124,8 +119,10 @@
                     <form class="example-form">
                         <mat-form-field class="mat-form-width" appearance="outline">
                         <input matInput
+                            [value]="nameFilter"
                             type="text"
-                            >
+                            (keyup)="filterData(+minLevel.value, +maxLevel.value, name.value, abilities.value)"
+                            #name>
                         </mat-form-field>
                     </form>
                     <p class="mdc-text-field--outlined">

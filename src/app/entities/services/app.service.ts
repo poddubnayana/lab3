@@ -6,20 +6,26 @@ import { IHero } from '../interfaces/app.interface';
   providedIn: 'root'
 })
 export class AppService {
-  private _heroes$$: BehaviorSubject<IHero[]> = new BehaviorSubject<IHero[]>([
+
+  public _heroes$$: BehaviorSubject<IHero[]> = new BehaviorSubject<IHero[]>([
     { 
-    abilities
-: 
-"Летать",
-level
-: 
-3,
-name
-: 
-"Яна Сергеевна Поддубная",
-power
-: 
-5}
+    abilities: ["Летать","Ловкость"],
+    level: 3,
+    name: "СССупермен",
+    power: 5
+    },
+    { 
+      abilities: ["Летать","Читать мысли"],
+      level: 5,
+      name: "ДДДДДжокер",
+      power: 5
+    },
+    { 
+      abilities: ["Летать"],
+      level: 8,
+      name: "ЯЯЯЯЯЯЯЯна",
+      power: 8
+    },
   ]);
   public heroes$: Observable<IHero[]> = this._heroes$$.asObservable();
 
@@ -31,6 +37,10 @@ power
     heroes.push(hero);
     this._heroes$$.next(heroes);
   }
+
+  // public addToData(result: IHero): void {
+  //   this.tableData.push(result);
+  // };
 
   public deleteRow(row: IHero): void {
     const heroes: IHero[] = this._heroes$$.getValue();
