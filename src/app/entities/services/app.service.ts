@@ -28,20 +28,33 @@ export class AppService {
     },
   ]);
   public heroes$: Observable<IHero[]> = this._heroes$$.asObservable();
-
+  
   constructor() { }
-
-
+  /**
+   * Сеттер
+   * 
+   * @method
+   * @param {IHero} hero 
+   * @description получение значений из BehaviorSubject, их запись в новый массив, обновление потока новым списком героев, передача обновленного массива
+   * и вызов следующего метода
+   * @public
+   * @type {IHero}
+   */
   public setHeroes(hero: IHero): void {
     const heroes: IHero[] = this._heroes$$.getValue();
     heroes.push(hero);
     this._heroes$$.next(heroes);
   }
-
-  // public addToData(result: IHero): void {
-  //   this.tableData.push(result);
-  // };
-
+  /**
+   * Удаление героя из списка
+   * 
+   * @method
+   * @param {IHero} row 
+   * @description получение значений из BehaviorSubject, их запись в новый массив, поиск индекса нужной строки, удаление героя из списка с помощью метода
+   * splice(), обновление потока новым списком героев, передача обновленного массива и вызов следующего метода
+   * @public
+   * @type {IHero} 
+   */
   public deleteRow(row: IHero): void {
     const heroes: IHero[] = this._heroes$$.getValue();
     const index = heroes.findIndex(item => item === row);

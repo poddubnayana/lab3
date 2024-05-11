@@ -2,8 +2,18 @@
   <div class="example-flex-container">
     <div class="example-button-row">
       <div class="example-button-container">
-        <button class="example-button" mat-raised-button color="primary" [routerLink] = "['/home']" routerLinkActive="active" ariaCurrentWhenActive="page">На главную</button>
-        <button class="example-button" mat-raised-button color="primary" [routerLink] = "['/table']" routerLinkActive="active" ariaCurrentWhenActive="page">Таблица</button>
+        <button class="example-button" [routerLink] = "['/home']" 
+                                       routerLinkActive="active" 
+                                       ariaCurrentWhenActive="page" 
+                                       mat-raised-button color="primary">
+                                    На главную
+        </button>
+        <button class="example-button" [routerLink] = "['/table']" 
+                                       routerLinkActive="active" 
+                                       ariaCurrentWhenActive="page" 
+                                       mat-raised-button color="primary">
+                                    Таблица
+        </button>
       </div>
     </div>
   </div>

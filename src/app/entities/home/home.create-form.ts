@@ -13,7 +13,13 @@ import {
 export class HomeFormBuilderService {
 
     constructor(private readonly _fb: FormBuilder) {}
-
+    /**
+     * Создание форм группы
+     * 
+     * @method
+     * @description создание форм группы героя
+     * @returns возвращает форм группу
+     */
     public createHeroForm(): FormGroup {
         return this._fb.group({
           name: new FormControl('', [Validators.required]),
@@ -22,7 +28,13 @@ export class HomeFormBuilderService {
           abilities: new FormControl([], [Validators.required]),
         });
     }
-
+    /**
+     * Создание форм группы для добавления способностей
+     * 
+     * @method
+     * @description создание форм группы для добавление способностей
+     * @returns возвращает форм группу
+     */
     public addAbilities(): FormGroup {
       return this._fb.group({
         abilities: new FormControl('', [Validators.pattern(/[a-zA-Zа-яёА-ЯЁ]/), Validators.required]),
