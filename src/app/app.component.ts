@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'lab3_poddubnaya';
+  private title = 'lab3_poddubnaya';
 }

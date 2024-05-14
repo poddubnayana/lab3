@@ -4,66 +4,87 @@
             <form [formGroup]="heroForm">
                 <form class="example-form-left">
                     <mat-form-field class="mat-form-width" appearance="outline">
-                    <mat-label>Имя</mat-label>
+                    <mat-label>
+                        Имя
+                    </mat-label>
                     <input matInput
                         formControlName="name"
-                        pattern="^[a-zA-Zа-яА-ЯёЁ\s]+$"
                         type="text"
-                        >
+                        pattern="^[a-zA-Zа-яА-ЯёЁ\s]+$"
+                        autocomplete="off">
                     </mat-form-field>
                 </form>
 
                 <form class="example-form-left">
                     <mat-form-field class="mat-form-width" appearance="outline">
-                    <mat-label>Сила</mat-label>
+                    <mat-label>
+                        Сила
+                    </mat-label>
                     <input matInput
                         formControlName="power"
                         type="number"
                         [min]="0"
-                        [max]="10">
+                        [max]="10"
+                        autocomplete="off">
                     </mat-form-field>
                 </form>
 
                 <form class="example-form-left">
                     <mat-form-field class="mat-form-width" appearance="outline">
-                        <mat-label>Способность</mat-label>
+                        <mat-label>
+                            Способность
+                        </mat-label>
                         <mat-select multiple formControlName="abilities">
-                          <mat-option *ngFor="let val of select_ability" [value]="val">{{val}}</mat-option>
+                          <mat-option *ngFor="let val of select_ability" [value]="val">
+                            {{val}}
+                        </mat-option>
                         </mat-select>
                       </mat-form-field>
                 </form>
 
                 <form class="example-form-left">
                     <mat-form-field class="mat-form-width" appearance="outline">
-                    <mat-label>Уровень</mat-label>
+                    <mat-label>
+                        Уровень
+                    </mat-label>
                     <input matInput
                         formControlName="level"
                         type="number"
                         [min]="0"
-                        [max]="10">
+                        [max]="10"
+                        autocomplete="off">
                     </mat-form-field>
                 </form>
             </form>
 
             <div class="example-button-row">
-                <button (click)="createHero()" [disabled]="!heroForm.valid"   mat-raised-button color="primary">Создать героя</button>
+                <button (click)="createHero()" 
+                        [disabled]="!heroForm.valid"   
+                        mat-raised-button color="primary">
+                    Создать героя
+                </button>
             </div>
         </div>
 
         <div class="border-forms">
             <form [formGroup]="addAbilities" class="example-form-left">
                 <mat-form-field class="mat-form-width" appearance="outline">
-                <mat-label>Добавление способностей</mat-label>
+                <mat-label>
+                    Добавление способностей
+                </mat-label>
                 <input matInput
                     formControlName="abilities"
-                    pattern="^[a-zA-Zа-яА-ЯёЁ\s]+$"
                     type="text"
-                    >
+                    pattern="^[a-zA-Zа-яА-ЯёЁ\s]+$">
                 </mat-form-field>
             </form>
 
             <div class="example-button-row">
-                <button (click)="addAbilityTo()" [disabled]="addAbilities.valid" mat-raised-button color="primary">Добавить способность</button>
+                <button (click)="addAbilityTo()" 
+                        [disabled]="!addAbilities.valid" 
+                        mat-raised-button color="primary">
+                    Добавить способность
+                </button>
             </div>
         </div>
     </div>
@@ -71,28 +92,30 @@
         <div class="border-forms">
             <form class="example-form-right">
                 <div class="row">
-                    <p class="mdc-text-field--outlined">
-                        Уровень героя:
+                    <p>
+                        <span class="mdc-text-field--outlined">Уровень героя:</span>
                     </p>
-                    <p class="mdc-text-field--outlined">
-                        от
+                    <p>
+                        <span class="mdc-text-field--outlined">от</span>
                     </p>
                     <form class="example-form-right">
                         <mat-form-field class="mat-form-width1" appearance="outline">
                         <input matInput
+                            (change)="filterData(+minLevel.value, +maxLevel.value, name.value, abilities.value)"
+                            [value]="minLevelFilter"
                             type="number"
                             [min]="1"
                             [max]="10"
-                            (change)="filterData(+minLevel.value, +maxLevel.value, name.value, abilities.value)"
                             #minLevel>
                         </mat-form-field>
                     </form>
-                    <p class="mdc-text-field--outlined">
-                        до
+                    <p>
+                        <span class="mdc-text-field--outlined">до</span>
                     </p>
                     <form class="example-form">
                         <mat-form-field class="mat-form-width1" appearance="outline">
                         <input matInput
+                            [value]="maxLevelFilter"
                             type="number"
                             [min]=(+minLevel.value)
                             [max]="10"
@@ -101,20 +124,22 @@
                             autocomplete="off">
                         </mat-form-field>
                     </form>
-                    <p class="mdc-text-field--outlined">
-                        Способности:
+                    <p>
+                        <span  class="mdc-text-field--outlined">Способности:</span>
                     </p>
-                    <mat-form-field class="mat-form-width" appearance="outline">
-                        <mat-select multiple #abilities (valueChange)="filterData(+minLevel.value, +maxLevel.value, name.value, abilities.value)">
-                            <mat-option *ngFor="let abilities of select_ability" [value]="abilities" >
-                                {{abilities}}  
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                    <form class="example-form mat-form-width">
+                        <mat-form-field class="mat-form-width" appearance="outline">
+                            <mat-select multiple #abilities [value]="abilitiesFitler" (valueChange)="filterData(+minLevel.value, +maxLevel.value, name.value, abilities.value)">
+                                <mat-option *ngFor="let abilities of select_ability" [value]="abilities" >
+                                    {{abilities}}  
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </form>
                 </div>
                 <div class="row">
-                    <p class="mdc-text-field--outlined">
-                        Поиск по имени:
+                    <p>
+                        <span class="mdc-text-field--outlined">Поиск по имени:</span>
                     </p>
                     <form class="example-form">
                         <mat-form-field class="mat-form-width" appearance="outline">
@@ -125,41 +150,47 @@
                             #name>
                         </mat-form-field>
                     </form>
-                    <p class="mdc-text-field--outlined">
-                        Сортировка по уровню
+                    <p>
+                        <span class="mdc-text-field--outlined">Сортировка по уровню</span>
                     </p>
-                    <mat-form-field class="mat-form-width" appearance="outline">
-                        <mat-select [(value)]="selectedSorting" matNativeControl>
-                          <mat-option *ngFor="let val of sorting" [value]="val" (click)="sortData()">
-                            {{ val }}
-                        </mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                    <form class="example-form mat-form-width">
+                        <mat-form-field class="mat-form-width" appearance="outline">
+                            <mat-select [(value)]="selectedSorting" matNativeControl>
+                            <mat-option  (click)="sortData()"
+                                         *ngFor="let val of sorting" [value]="val">
+                                {{ val }}
+                            </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </form>
                 </div>
             </form>
         </div>
     
         <mat-accordion>
-            
             <mat-expansion-panel class="border-forms" *ngFor="let hero of tableData" >
-                <mat-expansion-panel-header >
+                <mat-expansion-panel-header>
                 <mat-panel-title>
                     Имя: {{ hero.name }}
                 </mat-panel-title>
                 </mat-expansion-panel-header>
-                <p>Сила: {{ hero.power }}</p>
-                <p>Способности: {{ hero.abilities }}</p>
+                <p>
+                    <span>Сила: {{ hero.power }}</span>
+                </p>
+                <p>
+                    <span>Способности: {{ hero.abilities }}</span>
+                </p>
                 <div class="panel-row">
-                    <p>Уровень: {{ hero.level }}</p>
-                    <button (click)="deleteRow(hero)" mat-raised-button color="primary">Удалить</button>
+                    <span>Уровень: {{ hero.level }}</span>
+                    <button (click)="deleteHero(hero)" 
+                            mat-raised-button color="primary">
+                        Удалить
+                    </button>
                 </div>
             </mat-expansion-panel>
-        </mat-accordion>
-        
+        </mat-accordion> 
     </div>
-    
 </div>
 
-<router-outlet></router-outlet>
 
 

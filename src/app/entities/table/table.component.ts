@@ -1,7 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, DestroyRef, ViewChild } from '@angular/core';
 import { IHero } from '../interfaces/app.interface';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatTable } from '@angular/material/table';
 import { AppService } from '../services/app.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-table',
@@ -14,38 +15,40 @@ export class TableComponent {
 
   displayedColumns: string[] = ['name', 'level', 'power', 'abilities','del'];
 
-  //public dataSource: MatTableDataSource<any> = new MatTableDataSource([...this._appService.tableData]);
-
-  public dataSource: IHero[] = [
-    {
-      name: 'Супермен',
-      level: 8,
-      power: 6,
-      abilities: ['Летать'],
-    },
-  ];
+  public dataSource: IHero[] = [];
 
   constructor(
     private readonly _appService: AppService,
+    private readonly _destroyRef: DestroyRef
   ) { }
-
-  // public addHero(hero: IHero){
-  //   this.dataSource.data.push(ins);
-  //   this.dataSource._updateChangeSubscription();
-  //   this.table?.renderRows();
-  // }
-
+  /**
+   * Lifecycle hook
+   * 
+   * @method
+   * @description подписка и отписка от потока, наполнение отображаемого массива значениями, вызов методов сортировки и фильтрации
+   * @public
+   * @return {void}
+   */
   public ngOnInit(): void {
-    this._appService.heroes$.subscribe((heroes: IHero[]) => {
+    this._appService.heroes$
+              .pipe(takeUntilDestroyed(this._destroyRef))
+              .subscribe((heroes: IHero[]) => {
       this.dataSource = heroes;
-      //console.log(this.dataSource);
     });
   }
-
+  /**
+   * Удаление строки из таблицы и карточки героя
+   * 
+   * @method
+   * @param {IHero} row - строка таблицы/карточка героя
+   * @description удаление карточки героя и строки из таблицы с помощью вызова метода deleteRow из AppService,
+   * обновление строк таблицы
+   * @public
+   * @type {IHero}
+   */
   public deleteRow(row: IHero): void {
     this._appService.deleteRow(row);
     this.table?.renderRows();
   }
 
-  
 }
